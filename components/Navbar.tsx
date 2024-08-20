@@ -2,6 +2,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useData } from "../contexts/DataContext";
+import { common_file } from "../constant/constant";
+import { Tab } from "@headlessui/react";
 
 function Navbar() {
   const router = useRouter();
@@ -9,16 +11,16 @@ function Navbar() {
 
   return (
     <>
-      <nav className="w-full h-16 mt-auto max-w-5xl">
-        <div className="flex flex-row justify-between items-center h-full">
+      <nav className="w-full mt-auto max-w-5xl">
+        <div className="flex flex-col gap-2 py-2 lg:flex-row lg:justify-between lg:items-center">
           <Link href="/" passHref>
-            <span className="font-semibold text-xl cursor-pointer">
-              Polymarket
+            <span className="font-semibold text-xl cursor-pointer whitespace-nowrap">
+              {common_file.prediction_market.name}
             </span>
           </Link>
-          {!router.asPath.includes("/market") &&
-            !router.asPath.includes("/admin") && (
-              <div className="flex flex-row items-center justify-center h-full">
+          <div className="flex w-full">
+            {!router.asPath.includes("/market") && (
+              <div className="flex flex-row items-center gap-6 justify-center mr-auto lg:ml-auto">
                 <TabButton
                   title="Market"
                   isActive={router.asPath === "/"}
@@ -29,24 +31,30 @@ function Navbar() {
                   isActive={router.asPath === "/portfolio"}
                   url={"/portfolio"}
                 />
+                <TabButton
+                  title="Admin"
+                  isActive={router.asPath === "/admin"}
+                  url={"/admin"}
+                />
               </div>
             )}
-          {account ? (
-            <div className="bg-green-500 px-6 py-2 rounded-md cursor-pointer">
-              <span className="text-lg text-white">
-                {account.substr(0, 10)}...
-              </span>
-            </div>
-          ) : (
-            <div
-              className="bg-green-500 px-6 py-2 rounded-md cursor-pointer"
-              onClick={() => {
-                loadWeb3();
-              }}
-            >
-              <span className="text-lg text-white">Connect</span>
-            </div>
-          )}
+            {account ? (
+              <div className="bg-green-500 px-4 py-2 rounded-md cursor-pointer">
+                <span className="text-sm md:text-lg text-white">
+                  {account.substr(0, 10)}...
+                </span>
+              </div>
+            ) : (
+              <div
+                className="bg-green-500 px-4 py-2 rounded-md cursor-pointer"
+                onClick={() => {
+                  loadWeb3();
+                }}
+              >
+                <span className="text-sm md:text-lg text-white">Connect</span>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
     </>
@@ -58,7 +66,7 @@ export default Navbar;
 const TabButton = ({
   title,
   isActive,
-  url,
+  url
 }: {
   title: string;
   isActive: boolean;
@@ -67,13 +75,13 @@ const TabButton = ({
   return (
     <Link href={url} passHref>
       <div
-        className={`h-full px-4 flex items-center border-b-2 font-semibold hover:border-blue-700 hover:text-blue-700 cursor-pointer ${
+        className={`flex items-center border-b-2 font-semibold hover:border-blue-700 hover:text-blue-700 cursor-pointer ${
           isActive
             ? "border-blue-700 text-blue-700 text-lg font-semibold"
             : "border-white text-gray-400 text-lg"
         }`}
       >
-        <span>{title}</span>
+        <span className="text-sm md:text-lg">{title}</span>
       </div>
     </Link>
   );
