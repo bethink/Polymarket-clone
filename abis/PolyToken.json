@@ -12968,21 +12968,11 @@
   "ast": {
     "absolutePath": "project:/contracts/PolyToken.sol",
     "exportedSymbols": {
-      "Context": [
-        719
-      ],
-      "ERC20": [
-        586
-      ],
-      "IERC20": [
-        664
-      ],
-      "IERC20Metadata": [
-        689
-      ],
-      "PolyToken": [
-        804
-      ]
+      "Context": [719],
+      "ERC20": [586],
+      "IERC20": [664],
+      "IERC20Metadata": [689],
+      "PolyToken": [804]
     },
     "id": 805,
     "license": "GPL-3.0",
@@ -12990,12 +12980,7 @@
     "nodes": [
       {
         "id": 754,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".6"
-        ],
+        "literals": ["solidity", "^", "0.8", ".6"],
         "nodeType": "PragmaDirective",
         "src": "36:23:5"
       },
@@ -13018,9 +13003,7 @@
             "baseName": {
               "id": 756,
               "name": "ERC20",
-              "nameLocations": [
-                "139:5:5"
-              ],
+              "nameLocations": ["139:5:5"],
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 586,
               "src": "139:5:5"
@@ -13035,13 +13018,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 804,
-        "linearizedBaseContracts": [
-          804,
-          586,
-          689,
-          664,
-          719
-        ],
+        "linearizedBaseContracts": [804, 586, 689, 664, 719],
         "name": "PolyToken",
         "nameLocation": "126:9:5",
         "nodeType": "ContractDefinition",
@@ -13318,7 +13295,7 @@
                       "typeIdentifier": "t_stringliteral_75d03d4abbe1a23cd6279186bb6d54d901313f3681cea2617ef57468a1199925",
                       "typeString": "literal_string \"Poly Token\""
                     },
-                    "value": "Poly Token"
+                    "value": "TKN"
                   },
                   {
                     "hexValue": "504f4c59",
@@ -13334,7 +13311,7 @@
                       "typeIdentifier": "t_stringliteral_42e9b9ff2964f66d264e07a2cd4c5234a8c8c5adbfc54101bd50b0744fcd261f",
                       "typeString": "literal_string \"POLY\""
                     },
-                    "value": "POLY"
+                    "value": "TKN"
                   }
                 ],
                 "id": 764,
@@ -13342,9 +13319,7 @@
                 "modifierName": {
                   "id": 761,
                   "name": "ERC20",
-                  "nameLocations": [
-                    "192:5:5"
-                  ],
+                  "nameLocations": ["192:5:5"],
                   "nodeType": "IdentifierPath",
                   "referencedDeclaration": 586,
                   "src": "192:5:5"
@@ -13472,9 +13447,7 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        4294967278,
-                        4294967278,
-                        4294967278
+                        4294967278, 4294967278, 4294967278
                       ],
                       "referencedDeclaration": 4294967278,
                       "src": "366:7:5",
@@ -13661,10 +13634,7 @@
         "scope": 805,
         "src": "117:336:5",
         "usedErrors": [],
-        "usedEvents": [
-          598,
-          607
-        ]
+        "usedEvents": [598, 607]
       }
     ],
     "src": "36:418:5"
