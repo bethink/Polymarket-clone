@@ -93,7 +93,7 @@ export default function Home() {
           </div>
           <span className="font-bold my-3 text-lg">Market</span>
           <div className="flex flex-wrap overflow-hidden sm:-mx-1 md:-mx-2">
-            {markets.map((market) => {
+            {markets.slice(1).map((market) => {
               return (
                 <MarketCard
                   id={market.id}
