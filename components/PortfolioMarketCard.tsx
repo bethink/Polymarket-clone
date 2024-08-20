@@ -2,6 +2,7 @@ import moment from "moment";
 import Img from "next/image";
 import React from "react";
 import Web3 from "web3";
+import { common_file } from "../constant/constant";
 
 export interface MarketProps {
   id: string;
@@ -28,7 +29,7 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
   totalAmount,
   hasResolved,
   timestamp,
-  endTimestamp,
+  endTimestamp
 }) => {
   var endingOn = moment(parseInt(endTimestamp));
   var now = moment(new Date()); //todays date
@@ -57,7 +58,8 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
               Amount Added
             </span>
             <span className="text-base">
-              {Web3.utils.fromWei(userYes ?? userNo)} POLY
+              {Web3.utils.fromWei(userYes ?? userNo)}{" "}
+              {common_file.token_name.value}
             </span>
           </div>
           <div className="flex flex-col space-y-1">
