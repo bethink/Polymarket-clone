@@ -1,7 +1,6 @@
 import Img from "next/image";
 import React from "react";
 import Web3 from "web3";
-import { common_file } from "../constant/constant";
 
 interface Props {
   id: string;
@@ -17,7 +16,7 @@ export const AdminMarketCard: React.FC<Props> = ({
   totalAmount,
   onYes,
   onNo,
-  imageHash
+  imageHash,
 }) => {
   return (
     <div className="w-full overflow-hidden my-2">
@@ -40,7 +39,7 @@ export const AdminMarketCard: React.FC<Props> = ({
             </span>
             <span className="text-base">
               {parseFloat(Web3.utils.fromWei(totalAmount, "ether")).toFixed(2)}{" "}
-              {common_file.prediction_market.name}
+              POLY
             </span>
           </div>
           <div className="flex flex-col space-y-1">
