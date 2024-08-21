@@ -7,7 +7,12 @@ import Web3 from "web3";
 import ChartContainer from "../../components/Chart/ChartContainer";
 import Navbar from "../../components/Navbar";
 import { useData } from "../../contexts/DataContext";
-import { common_file } from "../../constant/constant";
+import {
+  common_file,
+  MarketDetailLoader,
+  MarketDetailLoader1,
+  MarketDetailLoader2
+} from "../../constant/constant";
 
 export interface MarketProps {
   id: string;
@@ -91,9 +96,19 @@ const Details = () => {
       <Navbar />
       <main className="w-full flex flex-col sm:flex-row py-4 max-w-5xl">
         {dataLoading ? (
-          <div className="flex flex-col justify-center items-center h-full w-full pt-10">
-            <div className="text-center">
-              <div className="text-3xl font-bold">Loading...</div>
+          <div className="w-full flex flex-col pt-1">
+            <div className="rounded-lg flex flex-row justify-start border border-gray-300">
+              <MarketDetailLoader />
+            </div>
+            <div className="flex flex-col space-y-3">
+              <div className="w-full flex flex-row mt-5">
+                <div className="w-2/3 border rounded-lg border-gray-300 mr-2">
+                  <MarketDetailLoader1 />
+                </div>
+                <div className="w-1/3 rounded-lg border border-gray-300 ml-2">
+                  <MarketDetailLoader2 />
+                </div>
+              </div>
             </div>
           </div>
         ) : (
@@ -109,11 +124,11 @@ const Details = () => {
                   />
                 </div>
                 <div className="flex flex-col justify-start w-1/2 space-y-1">
-                  <span className="text-xs font-light text-gray-500 whitespace-nowrap">
-                    US curreny affairs
-                  </span>
                   <span className="text-lg font-semibold whitespace-nowrap">
                     {market?.title}
+                  </span>
+                  <span className="text-xs font-light text-gray-500 whitespace-nowrap">
+                    {market?.description}
                   </span>
                 </div>
               </div>

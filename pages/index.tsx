@@ -5,7 +5,7 @@ import { MarketCard } from "../components/MarketCard";
 import Navbar from "../components/Navbar";
 import { useData } from "../contexts/DataContext";
 import styles from "../styles/Home.module.css";
-import { common_file } from "../constant/constant";
+import { common_file, MarketLoader } from "../constant/constant";
 
 export interface MarketProps {
   id: string;
@@ -19,6 +19,7 @@ export interface MarketProps {
 export default function Home() {
   const { polymarket, account, loadWeb3, loading } = useData();
   const [markets, setMarkets] = useState<MarketProps[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
 
   const getMarkets = useCallback(async () => {
     var totalQuestions = await polymarket.methods
@@ -37,6 +38,7 @@ export default function Home() {
       });
     }
     setMarkets(dataArray);
+    setDataLoading(false);
   }, [account, polymarket]);
 
   useEffect(() => {
@@ -92,21 +94,32 @@ export default function Home() {
             />
           </div>
           <span className="font-bold my-3 text-lg">Market</span>
-          <div className="flex flex-wrap overflow-hidden sm:-mx-1 md:-mx-2">
-            {markets.slice(1).map((market) => {
-              return (
-                <MarketCard
-                  id={market.id}
-                  key={market.id}
-                  title={market.title}
-                  totalAmount={market.totalAmount}
-                  totalYes={market.totalYes}
-                  totalNo={market.totalNo}
-                  imageHash={market.imageHash}
-                />
-              );
-            })}
-          </div>
+          {dataLoading ? (
+            <div className="flex flex-wrap overflow-hidden sm:-mx-1 md:-mx-2">
+              <MarketLoader />
+              <MarketLoader />
+              <MarketLoader />
+              <MarketLoader />
+              <MarketLoader />
+              <MarketLoader />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 sm:-mx-1 md:-mx-2">
+              {markets.slice(1).map((market) => {
+                return (
+                  <MarketCard
+                    id={market.id}
+                    key={market.id}
+                    title={market.title}
+                    totalAmount={market.totalAmount}
+                    totalYes={market.totalYes}
+                    totalNo={market.totalNo}
+                    imageHash={market.imageHash}
+                  />
+                );
+              })}
+            </div>
+          )}
         </div>
       </main>
     </div>

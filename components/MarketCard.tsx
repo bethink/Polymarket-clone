@@ -14,9 +14,9 @@ export const MarketCard: React.FC<MarketProps> = ({
   imageHash
 }) => {
   return (
-    <div className="w-full overflow-hidden sm:my-1 sm:px-1 sm:w-1/3 md:my-2 md:px-2 md:w-1/3 lg:w-1/3 xl:w-1/3 my-2">
+    <div className="w-full overflow-hidden sm:my-1 sm:px-1 md:my-2 md:px-2 my-2">
       <Link href={`/market/${id}`} passHref>
-        <div className="flex flex-col border border-gray-300 rounded-lg p-3 hover:border-blue-700 cursor-pointer">
+        <div className="flex w-full h-full flex-col border border-gray-300 rounded-lg p-3 hover:border-blue-700 cursor-pointer">
           <div className="flex flex-row space-x-5 pb-8">
             <div className="w-12  h-w-12 ">
               <Img
@@ -26,7 +26,7 @@ export const MarketCard: React.FC<MarketProps> = ({
                 height={100}
               />
             </div>
-            <span className="text-sm">{title}</span>
+            <p className="text-sm m-0">{title}</p>
           </div>
           <div className="flex flex-row flex-nowrap justify-between items-center">
             <div className="flex flex-col space-y-1">
