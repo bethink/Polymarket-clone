@@ -104,7 +104,7 @@ export default function Home() {
               <MarketLoader />
             </div>
           ) : (
-            <div className="flex flex-wrap sm:-mx-1 md:-mx-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 sm:-mx-1 md:-mx-2">
               {markets.slice(1).map((market) => {
                 return (
                   <MarketCard
