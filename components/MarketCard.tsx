@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Web3 from "web3";
 import { MarketProps } from "../pages";
+import { common_file } from "../constant/constant";
 
 export const MarketCard: React.FC<MarketProps> = ({
   id,
@@ -10,7 +11,7 @@ export const MarketCard: React.FC<MarketProps> = ({
   totalAmount,
   totalYes,
   totalNo,
-  imageHash,
+  imageHash
 }) => {
   return (
     <div className="w-full overflow-hidden sm:my-1 sm:px-1 sm:w-1/3 md:my-2 md:px-2 md:w-1/3 lg:w-1/3 xl:w-1/3 my-2">
@@ -34,7 +35,7 @@ export const MarketCard: React.FC<MarketProps> = ({
                 {parseFloat(Web3.utils.fromWei(totalAmount, "ether")).toFixed(
                   2
                 )}{" "}
-                POLY
+                {common_file.token_name.value}
               </span>
             </div>
             <div className="flex flex-col space-y-1">
@@ -42,7 +43,7 @@ export const MarketCard: React.FC<MarketProps> = ({
               <div className="px-1 bg-gray-200 text-center rounded-sm">
                 <span className="text-xs font-medium text-blue-700">
                   {parseFloat(Web3.utils.fromWei(totalYes, "ether")).toFixed(2)}{" "}
-                  POLY
+                  {common_file.token_name.value}
                 </span>
               </div>
             </div>
@@ -51,7 +52,7 @@ export const MarketCard: React.FC<MarketProps> = ({
               <div className="px-1 bg-gray-200 text-center rounded-sm">
                 <span className="text-xs font-medium text-blue-700">
                   {parseFloat(Web3.utils.fromWei(totalNo, "ether")).toFixed(2)}{" "}
-                  POLY
+                  {common_file.token_name.value}
                 </span>
               </div>
             </div>
