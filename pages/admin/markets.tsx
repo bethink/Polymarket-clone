@@ -59,7 +59,7 @@ const Markets: React.FC = () => {
 
         <main className="w-full flex flex-row flex-wrap py-4 max-w-5xl pb-6">
           {markets &&
-            markets.map((market) => (
+            markets.slice(1).map((market) => (
               <div key={market.id} className="w-1/2 pr-2">
                 <AdminMarketCard
                   id={market.id}

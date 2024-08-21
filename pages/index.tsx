@@ -104,7 +104,7 @@ export default function Home() {
               <MarketLoader />
             </div>
           ) : (
-            <div className="flex flex-wrap overflow-hidden sm:-mx-1 md:-mx-2">
+            <div className="flex flex-wrap sm:-mx-1 md:-mx-2">
               {markets.slice(1).map((market) => {
                 return (
                   <MarketCard

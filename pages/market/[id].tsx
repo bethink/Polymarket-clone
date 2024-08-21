@@ -124,11 +124,11 @@ const Details = () => {
                   />
                 </div>
                 <div className="flex flex-col justify-start w-1/2 space-y-1">
-                  <span className="text-xs font-light text-gray-500 whitespace-nowrap">
-                    US curreny affairs
-                  </span>
                   <span className="text-lg font-semibold whitespace-nowrap">
                     {market?.title}
+                  </span>
+                  <span className="text-xs font-light text-gray-500 whitespace-nowrap">
+                    {market?.description}
                   </span>
                 </div>
               </div>
