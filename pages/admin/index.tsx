@@ -56,13 +56,13 @@ const Admin = () => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Navbar />
-        <main className="w-full flex flex-col py-4 max-w-5xl pb-6">
+        <main className="w-full flex flex-col py-4 max-w-3xl pb-6">
           <Link href="/admin/markets">
-            <a className="mt-5 rounded-lg py-3 text-center w-full bg-blue-700 text-white font-bold mb-5">
+            <a className="mt-5 rounded-lg py-3 text-center w-full bg-blue-500 text-blue-50 font-bold mb-5">
               See All Markets
             </a>
           </Link>
-          <div className="w-full flex flex-col pt-1 border border-gray-300 p-5 rounded-lg ">
+          <div className="w-full flex flex-col pt-1 border border-gray-200 p-5 rounded-lg ">
             <span className="text-lg font-semibold mt-4">Add New Market</span>
             <span className="text-lg font mt-6 mb-1">Market Title</span>
             <input
@@ -112,7 +112,7 @@ const Admin = () => {
               </span>
             ) : (
               <button
-                className="mt-5 rounded-lg py-3 text-center w-full bg-green-500 text-white font-bold"
+                className="mt-5 rounded-lg py-3 text-center w-full bg-green-500 text-blue-50 font-bold"
                 onClick={() => {
                   handleSubmit();
                 }}

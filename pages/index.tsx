@@ -11,14 +11,17 @@ export interface MarketProps {
   id: string;
   title: string;
   imageHash: string;
+  hasResolved?: boolean;
   totalAmount: string;
   totalYes: string;
   totalNo: string;
+  endTimestamp: string;
 }
 
 export default function Home() {
   const { polymarket, account, loadWeb3, loading } = useData();
   const [markets, setMarkets] = useState<MarketProps[]>([]);
+  console.log("🚀 ~ Home ~ markets:", markets);
   const [dataLoading, setDataLoading] = useState(true);
 
   const getMarkets = useCallback(async () => {
@@ -32,9 +35,11 @@ export default function Home() {
         id: data.id,
         title: data.question,
         imageHash: data.creatorImageHash,
+        hasResolved: data.eventCompleted,
         totalAmount: data.totalAmount,
         totalYes: data.totalYesAmount,
-        totalNo: data.totalNoAmount
+        totalNo: data.totalNoAmount,
+        endTimestamp: data.endTimestamp
       });
     }
     setMarkets(dataArray);
@@ -111,10 +116,12 @@ export default function Home() {
                     id={market.id}
                     key={market.id}
                     title={market.title}
+                    hasResolved={market.hasResolved}
                     totalAmount={market.totalAmount}
                     totalYes={market.totalYes}
                     totalNo={market.totalNo}
                     imageHash={market.imageHash}
+                    endTimestamp={market.endTimestamp}
                   />
                 );
               })}

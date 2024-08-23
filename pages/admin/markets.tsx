@@ -5,11 +5,18 @@ import { MarketProps } from "..";
 import { AdminMarketCard } from "../../components/AdminMarketCard";
 import Navbar from "../../components/Navbar";
 import { useData } from "../../contexts/DataContext";
-import { common_file } from "../../constant/constant";
+import {
+  AdminCardSample,
+  AdminMarketCardLoader,
+  common_file,
+  MarketLoader
+} from "../../constant/constant";
 
 const Markets: React.FC = () => {
   const { polymarket, account, loadWeb3, loading } = useData();
   const [markets, setMarkets] = useState<MarketProps[]>([]);
+  console.log("🚀 ~ markets:", markets);
+  const [dataLoading, setDataLoading] = useState<Boolean>(true);
 
   const getMarkets = useCallback(async () => {
     var totalQuestions = await polymarket.methods
@@ -23,11 +30,14 @@ const Markets: React.FC = () => {
         title: data.question,
         imageHash: data.creatorImageHash,
         totalAmount: data.totalAmount,
+        hasResolved: data.eventCompleted,
         totalYes: data.totalYesAmount,
-        totalNo: data.totalNoAmount
+        totalNo: data.totalNoAmount,
+        endTimestamp: data.endTimestamp
       });
     }
     setMarkets(dataArray);
+    setDataLoading(false);
   }, [account, polymarket]);
 
   useEffect(() => {
@@ -49,7 +59,7 @@ const Markets: React.FC = () => {
           <Link href="/admin">
             <a
               type="button"
-              className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+              className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-50 bg-blue-500 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
               onClick={() => {}}
             >
               Back
@@ -57,29 +67,38 @@ const Markets: React.FC = () => {
           </Link>
         </div>
 
-        <main className="w-full flex flex-row flex-wrap py-4 max-w-5xl pb-6">
-          {markets &&
-            markets.slice(1).map((market) => (
-              <div key={market.id} className="w-1/2 pr-2">
-                <AdminMarketCard
-                  id={market.id}
-                  imageHash={market.imageHash}
-                  title={market.title}
-                  totalAmount={market.totalAmount}
-                  onYes={async () => {
-                    await polymarket.methods
-                      .distributeWinningAmount(market.id, true)
-                      .send({ from: account });
-                  }}
-                  onNo={async () => {
-                    await polymarket.methods
-                      .distributeWinningAmount(market.id, false)
-                      .send({ from: account });
-                  }}
-                />
-              </div>
-            ))}
-        </main>
+        {dataLoading ? (
+          <main className="w-full flex flex-row flex-wrap py-4 max-w-5xl pb-6">
+            <AdminMarketCardLoader />
+          </main>
+        ) : (
+          // <AdminMarketCardLoader />
+          <main className="w-full flex flex-row flex-wrap py-4 max-w-5xl pb-6">
+            {markets &&
+              markets.slice(1).map((market) => (
+                <div key={market.id} className="w-1/2 pr-2">
+                  <AdminMarketCard
+                    id={market.id}
+                    imageHash={market.imageHash}
+                    title={market.title}
+                    totalAmount={market.totalAmount}
+                    hasResolved={market.hasResolved}
+                    endTimestamp={market.endTimestamp}
+                    onYes={async () => {
+                      await polymarket.methods
+                        .distributeWinningAmount(market.id, true)
+                        .send({ from: account });
+                    }}
+                    onNo={async () => {
+                      await polymarket.methods
+                        .distributeWinningAmount(market.id, false)
+                        .send({ from: account });
+                    }}
+                  />
+                </div>
+              ))}
+          </main>
+        )}
       </div>
     </>
   );

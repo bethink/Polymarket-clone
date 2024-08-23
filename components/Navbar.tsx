@@ -40,7 +40,7 @@ function Navbar() {
             )}
             {account ? (
               <div className="bg-green-500 px-4 py-2 rounded-md cursor-pointer">
-                <span className="text-sm md:text-lg text-white">
+                <span className="text-sm md:text-lg text-blue-50">
                   {account.substr(0, 10)}...
                 </span>
               </div>
@@ -51,7 +51,7 @@ function Navbar() {
                   loadWeb3();
                 }}
               >
-                <span className="text-sm md:text-lg text-white">Connect</span>
+                <span className="text-sm md:text-lg text-blue-50">Connect</span>
               </div>
             )}
           </div>
@@ -75,9 +75,9 @@ const TabButton = ({
   return (
     <Link href={url} passHref>
       <div
-        className={`flex items-center border-b-2 font-semibold hover:border-blue-700 hover:text-blue-700 cursor-pointer ${
+        className={`flex items-center border-b-2 font-semibold hover:border-blue-400 hover:text-blue-500 cursor-pointer ${
           isActive
-            ? "border-blue-700 text-blue-700 text-lg font-semibold"
+            ? "border-blue-600 text-blue-600 text-lg font-semibold"
             : "border-white text-gray-400 text-lg"
         }`}
       >

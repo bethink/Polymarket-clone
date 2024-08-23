@@ -4,7 +4,7 @@ import Img from "next/image";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
-import ChartContainer from "../../components/Chart/ChartContainer";
+// import ChartContainer from "../../components/Chart/ChartContainer";
 import Navbar from "../../components/Navbar";
 import { useData } from "../../contexts/DataContext";
 import {
@@ -13,6 +13,7 @@ import {
   MarketDetailLoader1,
   MarketDetailLoader2
 } from "../../constant/constant";
+import ChartContainer from "../../components/Chart/ChartContainer";
 
 export interface MarketProps {
   id: string;
@@ -24,6 +25,7 @@ export interface MarketProps {
   description: string;
   endTimestamp: number;
   resolverUrl: string;
+  hasResolved?: boolean;
 }
 
 const Details = () => {
@@ -31,6 +33,12 @@ const Details = () => {
   const { id } = router.query;
   const { polymarket, account, loadWeb3, loading, polyToken } = useData();
   const [market, setMarket] = useState<MarketProps>();
+  const [resolved, setResolved] = useState<Boolean>();
+  const timeStamp = market?.endTimestamp;
+  const time = new Date(timeStamp as string | number).getTime();
+  const istDate = new Date(time);
+  const CurrentutcDate = new Date();
+
   const [selected, setSelected] = useState<string>("YES");
   const [dataLoading, setDataLoading] = useState(true);
   const [button, setButton] = useState<string>("Trade");
@@ -39,6 +47,7 @@ const Details = () => {
 
   const getMarketData = useCallback(async () => {
     var data = await polymarket.methods.questions(id).call({ from: account });
+    console.log("🚀 ~ getMarketData ~ data:", data);
     setMarket({
       id: data.id,
       title: data.question,
@@ -48,7 +57,8 @@ const Details = () => {
       totalNo: parseInt(data.totalNoAmount),
       description: data.description,
       endTimestamp: parseInt(data.endTimestamp),
-      resolverUrl: data.resolverUrl
+      resolverUrl: data.resolverUrl,
+      hasResolved: data.eventCompleted
     });
     setDataLoading(false);
   }, [account, id, polymarket]);
@@ -76,14 +86,23 @@ const Details = () => {
           .send({ from: account });
       }
     }
-    await getMarketData();
+    if (window !== undefined) {
+      await getMarketData();
+    }
     setButton("Trade");
   };
 
   useEffect(() => {
-    loadWeb3().then(() => {
-      if (!loading) getMarketData();
-    });
+    if (window !== undefined) {
+      loadWeb3().then(() => {
+        if (!loading) getMarketData();
+      });
+      if (CurrentutcDate > istDate) {
+        setResolved(true);
+      } else {
+        setResolved(false);
+      }
+    }
   }, [loading]);
 
   return (
@@ -97,15 +116,15 @@ const Details = () => {
       <main className="w-full flex flex-col sm:flex-row py-4 max-w-5xl">
         {dataLoading ? (
           <div className="w-full flex flex-col pt-1">
-            <div className="rounded-lg flex flex-row justify-start border border-gray-300">
+            <div className="rounded-lg flex flex-row justify-start border border-gray-200">
               <MarketDetailLoader />
             </div>
             <div className="flex flex-col space-y-3">
               <div className="w-full flex flex-row mt-5">
-                <div className="w-2/3 border rounded-lg border-gray-300 mr-2">
+                <div className="w-2/3 border rounded-lg border-gray-200 mr-2">
                   <MarketDetailLoader1 />
                 </div>
-                <div className="w-1/3 rounded-lg border border-gray-300 ml-2">
+                <div className="w-1/3 rounded-lg border border-gray-200 ml-2">
                   <MarketDetailLoader2 />
                 </div>
               </div>
@@ -113,7 +132,7 @@ const Details = () => {
           </div>
         ) : (
           <div className="w-full flex flex-col pt-1">
-            <div className="p-6 rounded-lg flex flex-row justify-start border border-gray-300">
+            <div className="p-6 rounded-lg flex flex-row justify-start border border-gray-200">
               <div className="flex flex-row">
                 <div className="h-w-15 pr-4">
                   <Img
@@ -161,10 +180,10 @@ const Details = () => {
             </div>
             <div className="flex flex-col space-y-3">
               <div className="w-full flex flex-row mt-5">
-                <div className="w-2/3 border rounded-lg p-1 pb-4 border-gray-300 mr-2">
+                <div className="w-2/3 border rounded-lg p-1 pb-4 border-gray-200 mr-2">
                   <ChartContainer questionId={market?.id ?? "0"} />
                 </div>
-                <div className="w-1/3 rounded-lg border border-gray-300 ml-2">
+                <div className="w-1/3 rounded-lg border border-gray-200 ml-2">
                   <div className="flex flex-col items-start p-6">
                     <span className="text-lg font-bold m-auto pb-2">Buy</span>
                     <hr className="text-black w-full py-2" />
@@ -172,7 +191,7 @@ const Details = () => {
                     <div
                       className={`w-full py-2 px-2 ${
                         selected == "YES"
-                          ? "bg-green-500 text-white"
+                          ? "bg-green-500 text-blue-50"
                           : "bg-gray-100"
                       } mt-2 cursor-pointer`}
                       onClick={() => setSelected("YES")}
@@ -189,7 +208,7 @@ const Details = () => {
                     <div
                       className={`w-full py-2 px-2 ${
                         selected == "NO"
-                          ? "bg-green-500 text-white"
+                          ? "bg-green-500 text-blue-50"
                           : "bg-gray-100"
                       } mt-2 cursor-pointer`}
                       onClick={() => setSelected("NO")}
@@ -204,7 +223,7 @@ const Details = () => {
                       %
                     </div>
                     <span className="text-sm mt-5 mb-4">How much?</span>
-                    <div className="w-full border border-gray-300 flex flex-row items-center">
+                    <div className="w-full border border-gray-200 flex flex-row items-center">
                       <input
                         type="search"
                         name="q"
@@ -222,9 +241,17 @@ const Details = () => {
                       </span>
                     </div>
                     <button
-                      className="mt-5 rounded-lg py-3 text-center w-full bg-blue-700 text-white"
+                      className={`mt-5 rounded-lg py-3 text-center w-full ${
+                        resolved || market?.hasResolved
+                          ? "bg-blue-200"
+                          : "bg-blue-700"
+                      } text-blue-50`}
                       onClick={handleTrade}
-                      disabled={button !== "Trade"}
+                      disabled={
+                        resolved === true ||
+                        button !== "Trade" ||
+                        market?.hasResolved === true
+                      }
                     >
                       {button}
                     </button>
@@ -238,7 +265,11 @@ const Details = () => {
                 <span>{market?.description}</span>
                 <span className="text-base my-3 py-2 bg-gray-100 rounded-xl px-3">
                   Resolution Source :{" "}
-                  <a className="text-blue-700" href={market?.resolverUrl}>
+                  <a
+                    className="text-blue-700"
+                    target="_self"
+                    href={market?.resolverUrl}
+                  >
                     {market?.resolverUrl}
                   </a>
                 </span>
