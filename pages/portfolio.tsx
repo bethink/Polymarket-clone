@@ -5,7 +5,15 @@ import Navbar from "../components/Navbar";
 import { PortfolioMarketCard } from "../components/PortfolioMarketCard";
 import { useData } from "../contexts/DataContext";
 import styles from "../styles/Home.module.css";
-import { common_file } from "../constant/constant";
+import {
+  common_file,
+  MarketDetailLoader,
+  MarketLoader,
+  MarketPositonCardLoader,
+  MarketPositonCardLoaderStat,
+  PortfolioPageLoader
+} from "../constant/constant";
+import { MarketCard } from "../components/MarketCard";
 
 export interface MarketProps {
   id: string;
@@ -38,6 +46,7 @@ const Portfolio = () => {
   const [portfolioValue, setPortfolioValue] = useState<number>(0);
   const [allQuestions, setAllQuestions] = useState<QuestionsProps[]>([]);
   const [openPositions, setOpenPositions] = useState<number>(0);
+  const [dataLoading, setDataLoading] = useState<Boolean>(true);
 
   const getMarkets = useCallback(async () => {
     var totalQuestions = await polymarket.methods
@@ -98,6 +107,7 @@ const Portfolio = () => {
       dataArray[i].endTimestamp = question!.endTimestamp;
     }
     setMarkets(dataArray);
+    setDataLoading(false);
   }, [account, polymarket]);
 
   useEffect(() => {
@@ -116,36 +126,46 @@ const Portfolio = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <main className="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow max-w-5xl">
-        <div className="w-full flex flex-col pt-1">
-          <div className="p-10 bg-blue-700 rounded-lg flex flex-row justify-evenly">
-            <div className="flex flex-col items-center">
-              <h1 className="text-white opacity-50 text-lg">Portfolio Value</h1>
-              <h1 className="text-white text-4xl font-bold">
-                {Web3.utils.fromWei(portfolioValue.toString())}{" "}
-                {common_file.token_name.value}
-              </h1>
+      {dataLoading ? (
+        <main className="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow max-w-5xl">
+          <MarketPositonCardLoader />
+        </main>
+      ) : (
+        <main className="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow max-w-5xl">
+          <div className="w-full flex flex-col pt-1">
+            <div className="p-10 bg-blue-500 rounded-lg flex flex-row justify-evenly">
+              <div className="flex flex-col items-center">
+                <h1 className="text-blue-50 opacity-50 text-lg">
+                  Portfolio Value
+                </h1>
+                <h1 className="text-blue-50 text-4xl font-bold">
+                  {Web3.utils.fromWei(portfolioValue.toString())}{" "}
+                  {common_file.token_name.value}
+                </h1>
+              </div>
             </div>
+            <span className="font-bold my-3 text-lg">
+              Your Market Positions
+            </span>
+            {markets.map((market) => (
+              <PortfolioMarketCard
+                id={market.id}
+                title={market.title!}
+                imageHash={market.imageHash!}
+                totalAmount={market.totalAmount!}
+                totalYes={market.totalYes!}
+                totalNo={market.totalNo!}
+                userYes={market.userYes!}
+                userNo={market.userNo!}
+                key={market.id!}
+                hasResolved={market.hasResolved!}
+                timestamp={market.timestamp!}
+                endTimestamp={market.endTimestamp!}
+              />
+            ))}
           </div>
-          <span className="font-bold my-3 text-lg">Your Market Positions</span>
-          {markets.map((market) => (
-            <PortfolioMarketCard
-              id={market.id}
-              title={market.title!}
-              imageHash={market.imageHash!}
-              totalAmount={market.totalAmount!}
-              totalYes={market.totalYes!}
-              totalNo={market.totalNo!}
-              userYes={market.userYes!}
-              userNo={market.userNo!}
-              key={market.id!}
-              hasResolved={market.hasResolved!}
-              timestamp={market.timestamp!}
-              endTimestamp={market.endTimestamp!}
-            />
-          ))}
-        </div>
-      </main>
+        </main>
+      )}
     </div>
   );
 };

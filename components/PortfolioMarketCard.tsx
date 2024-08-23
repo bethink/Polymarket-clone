@@ -34,9 +34,11 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
   var endingOn = moment(parseInt(endTimestamp));
   var now = moment(new Date()); //todays date
   var daysLeft = moment.duration(endingOn.diff(now)).asDays().toFixed(0);
+  const daysCheck = parseInt(daysLeft) > 0 ? true : false;
+  console.log("🚀 ~ daysCheck:", daysCheck);
   return (
     <div className="w-full overflow-hidden my-2">
-      <div className="flex flex-col border border-gray-300 rounded-lg p-5 hover:border-blue-700 cursor-pointer">
+      <div className="flex flex-col border border-gray-200 rounded-lg p-5 hover:border-blue-400 cursor-pointer">
         <div className="flex flex-row space-x-5 pb-4">
           <div className="h-w-15">
             <Img
@@ -73,13 +75,15 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
             </span>
           </div>
           <div className="flex flex-col space-y-1">
-            <span className="text-xs text-gray-500 font-light">Ending In</span>
-            <span className="text-base">
-              {parseInt(daysLeft) > 0 ? `${daysLeft} days` : "Ended"}
+            <span className="text-xs text-gray-500 font-light">
+              {daysCheck ? "Ending In" : "Ended"}
+            </span>
+            <span className={`text-base ${daysCheck ? "" : "pl-4"}`}>
+              {parseInt(daysLeft) > 0 ? `${daysLeft} days` : "_"}
             </span>
           </div>
           <div className="flex flex-col space-y-1 items-end">
-            <div className="py-2 px-8 rounded-lg bg-blue-700 text-white">
+            <div className="py-2 px-8 rounded-lg bg-blue-500 text-blue-50">
               Trade
             </div>
           </div>
