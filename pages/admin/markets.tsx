@@ -17,7 +17,6 @@ const Markets: React.FC = () => {
   const { polymarket, account, loadWeb3, loading } = useData();
   const [markets, setMarkets] = useState<MarketProps[]>([]);
   const [filterItems, setFilterItems] = useState<MarketProps[]>([]);
-  console.log("🚀 ~ markets:", markets);
   const [dataLoading, setDataLoading] = useState<Boolean>(true);
   const [activeStatus, setActiveStatus] = useState<string>("Live");
   const loaders = Array(9).fill(0);
@@ -52,15 +51,15 @@ const Markets: React.FC = () => {
 
   useEffect(() => {
     const filtered = markets.filter((item) => {
-      const isResolved = activeStatus === "Live" ? false : true
+      const isResolved = activeStatus === "Live" ? false : true;
       return item.hasResolved === isResolved;
     });
     setFilterItems(filtered);
-  }, [markets, activeStatus])
+  }, [markets, activeStatus]);
 
   const handleOnSelect = (item: string) => {
-    setActiveStatus(item)
-  }
+    setActiveStatus(item);
+  };
 
   return (
     <>
@@ -79,8 +78,19 @@ const Markets: React.FC = () => {
                   className="cursor-pointer inline-flex gap-4 px-4 py-3 bg-gray-400 rounded-xl bg-opacity-10 hover:bg-opacity-20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                   onClick={() => {}}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
+                    />
                   </svg>
                   <span className="font-base">Back</span>
                 </div>
@@ -96,7 +106,10 @@ const Markets: React.FC = () => {
             {dataLoading ? (
               <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {loaders.map((_, index) => (
-                  <div className="flex flex-col border border-gray-200 rounded-lg p-5 hover:border-gray-600" key={index}>
+                  <div
+                    className="flex flex-col border border-gray-200 rounded-lg p-5 hover:border-gray-600"
+                    key={index}
+                  >
                     <AdminMarketCardLoader />
                   </div>
                 ))}
@@ -131,7 +144,6 @@ const Markets: React.FC = () => {
             )}
           </div>
         </div>
-
       </div>
     </>
   );

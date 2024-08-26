@@ -2,10 +2,10 @@ import moment from "moment";
 import Img from "next/image";
 import React from "react";
 import Web3 from "web3";
-import { common_file } from "../constant/constant";
+import { common_file, ImageArr } from "../constant/constant";
 
 export interface MarketProps {
-  id: string;
+  id: any;
   title: string;
   imageHash: string;
   totalAmount: string;
@@ -31,6 +31,7 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
   timestamp,
   endTimestamp
 }) => {
+  let imageName = ImageArr[id - 1]?.image;
   var endingOn = moment(parseInt(endTimestamp));
   var now = moment(new Date()); //todays date
   var daysLeft = moment.duration(endingOn.diff(now)).asDays().toFixed(0);
@@ -43,8 +44,8 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
           <div className="w-12 h-12 flex-shrink-0">
             <img
               // src={`https://ipfs.infura.io/ipfs/${imageHash}`}
-              src={"https://cdn.guardianlink.io/product-hotspot/images/crypto_callit"}
-              className="rounded-full"
+              src={`/images/${imageName}`}
+              className="rounded-full w-full h-full object-cover"
               width={55}
               height={55}
             />

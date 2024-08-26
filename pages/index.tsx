@@ -20,8 +20,10 @@ export interface MarketProps {
 
 export default function Home() {
   const { polymarket, account, loadWeb3, loading } = useData();
+  const [activeStatus, setActiveStatus] = useState<string>("Volume");
+  const [category, setCategory] = useState<string>("All");
+  const [search, setSearch] = useState<string>("");
   const [markets, setMarkets] = useState<MarketProps[]>([]);
-  console.log("🚀 ~ Home ~ markets:", markets);
   const [dataLoading, setDataLoading] = useState(true);
   const loaders = Array(12).fill(0);
 
@@ -53,6 +55,18 @@ export default function Home() {
     });
   }, [loading]);
 
+  const handleOnSelect = (item: string) => {
+    setActiveStatus(item);
+  };
+  const handleCatSelect = (item: string) => {
+    setCategory(item);
+  };
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      // solidtity file for search
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -81,24 +95,29 @@ export default function Home() {
               <input
                 type="search"
                 name="q"
+                value={search}
                 className="w-full py-3 px-3 text-base text-gray-700 bg-gray-100 rounded-xl pl-10 focus:outline-none"
                 placeholder="Search markets..."
                 autoComplete="off"
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={(e) => handleKeyDown(e)}
               />
             </div>
             <div className="flex gap-4 md:gap-6 lg:flex-shrink-0">
               <Filter
                 list={["All", "Crypto", "Football", "Covid 19", "Politics"]}
-                activeItem="All"
+                activeItem={category}
                 category="Category"
-                onChange={() => { }}
-                menuItemsClassName={"left-0 lg:left-auto origin-top-left lg:right-0 lg:origin-top-right"}
+                onChange={(e) => handleCatSelect(e)}
+                menuItemsClassName={
+                  "left-0 lg:left-auto origin-top-left lg:right-0 lg:origin-top-right"
+                }
               />
               <Filter
-                list={["Volume", "Newest", "Expiring"]}
-                activeItem="Volume"
+                list={["Trending", "Liquidity", "Volume", "Newest", "Expiring"]}
+                activeItem={activeStatus}
                 category="Sort By"
-                onChange={() => {}}
+                onChange={(e) => handleOnSelect(e)}
               />
             </div>
           </div>
@@ -108,7 +127,10 @@ export default function Home() {
           {dataLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xxl:grid-cols-4 gap-4">
               {loaders.map((_, index) => (
-                <div className="flex flex-col border border-gray-200 rounded-lg p-3 cursor-pointer" key={index} >
+                <div
+                  className="flex flex-col border border-gray-200 rounded-lg p-3 cursor-pointer"
+                  key={index}
+                >
                   <MarketLoader />
                 </div>
               ))}

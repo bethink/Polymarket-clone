@@ -6,7 +6,9 @@ export const common_file = Object.freeze({
 
 export const MarketLoader = () => (
   <ContentLoader
-    viewBox="0 0 100% 150" width="100%" height="120"
+    viewBox="0 0 100% 150"
+    width="100%"
+    height="120"
     backgroundColor="#e5e5e5"
     foregroundColor="#f3f3f3"
   >
@@ -23,7 +25,9 @@ export const MarketLoader = () => (
 
 export const AdminCardSample = () => (
   <ContentLoader
-    viewBox="0 0 100% 150" width="100%" height="170"
+    viewBox="0 0 100% 150"
+    width="100%"
+    height="170"
     backgroundColor="#e5e5e5"
     foregroundColor="#f3f3f3"
   >
@@ -40,13 +44,13 @@ export const AdminCardSample = () => (
   </ContentLoader>
 );
 
-export const AdminMarketCardLoader = () => (
-  <AdminCardSample />
-);
+export const AdminMarketCardLoader = () => <AdminCardSample />;
 
 export const MarketPositonCardLoader = () => (
   <ContentLoader
-    viewBox="0 0 100% 150" width="100%" height="220"
+    viewBox="0 0 100% 150"
+    width="100%"
+    height="220"
     backgroundColor="#e5e5e5"
     foregroundColor="#f3f3f3"
   >
@@ -60,7 +64,14 @@ export const MarketPositonCardLoader = () => (
     <rect x="0" y="160" rx="4" ry="4" width="100" height="8" />
     <rect x="90%" y="140" rx="4" ry="4" width="50" height="8" />
     <rect x="85%" y="160" rx="4" ry="4" width="100" height="8" />
-    <rect x="calc(100% - 125px)" y="180" rx="8" ry="8" width="125" height="30" />
+    <rect
+      x="calc(100% - 125px)"
+      y="180"
+      rx="8"
+      ry="8"
+      width="125"
+      height="30"
+    />
   </ContentLoader>
 );
 
@@ -184,7 +195,6 @@ export const calculateTimeLeft = (input: number, cInput: number) => {
   return timeLeft;
 };
 
-
 export const ImageArr = [
   { image: "us_election.webp" },
   { image: "russia_war.jpeg" },
@@ -201,5 +211,6 @@ export const ImageArr = [
   { image: "test-cric.jpeg" },
   { image: "us_election.webp" },
   { image: "bitcoin.jpg" },
-  { image: "test-cric.jpeg" }
+  { image: "test-cric.jpeg" },
+  { image: "us_election.webp" }
 ];
