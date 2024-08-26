@@ -11,7 +11,7 @@ import {
   common_file,
   MarketDetailLoader,
   MarketDetailLoader1,
-  MarketDetailLoader2
+  MarketDetailLoader2,
 } from "../../constant/constant";
 import ChartContainer from "../../components/Chart/ChartContainer";
 
@@ -113,7 +113,7 @@ const Details = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <main className="w-full flex flex-col sm:flex-row py-4 max-w-5xl">
+      <main className="w-full flex flex-col sm:flex-row py-6 max-w-full px-4 sm:px-6 lg:px-8 w-full">
         {dataLoading ? (
           <div className="w-full flex flex-col pt-1">
             <div className="rounded-lg flex flex-row justify-start border border-gray-200">
@@ -131,150 +131,155 @@ const Details = () => {
             </div>
           </div>
         ) : (
-          <div className="w-full flex flex-col pt-1">
-            <div className="p-6 rounded-lg flex flex-row justify-start border border-gray-200">
-              <div className="flex flex-row">
-                <div className="h-w-15 pr-4">
-                  <Img
-                    src={`https://ipfs.infura.io/ipfs/${market?.imageHash}`}
-                    className="rounded-full"
-                    width={55}
-                    height={55}
-                  />
-                </div>
-                <div className="flex flex-col justify-start w-1/2 space-y-1">
-                  <span className="text-lg font-semibold whitespace-nowrap">
-                    {market?.title}
-                  </span>
-                  <span className="text-xs font-light text-gray-500 whitespace-nowrap">
-                    {market?.description}
-                  </span>
-                </div>
-              </div>
-              <div className="flex flex-row items-center space-x-4 ml-3">
-                <div className="flex flex-col justify-start bg-gray-100 p-3">
-                  <span className="text-xs font-light text-gray-500 whitespace-nowrap">
-                    Market End on
-                  </span>
-                  <span className="text-base font-semibold text-black whitespace-nowrap">
-                    {market?.endTimestamp
-                      ? moment(
-                          parseInt((market?.endTimestamp).toFixed(0))
-                        ).format("MMMM D, YYYY")
-                      : "N/A"}
-                  </span>
-                </div>
-                <div className="flex flex-col justify-start bg-gray-100 p-3">
-                  <span className="text-xs font-light text-gray-500 whitespace-nowrap">
-                    Total Volume
-                  </span>
-                  <span className="text-base font-semibold text-black whitespace-nowrap">
-                    {Web3.utils.fromWei(
-                      market?.totalAmount.toString() ?? "0",
-                      "ether"
-                    ) ?? 0}{" "}
-                    {common_file.token_name.value}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col space-y-3">
-              <div className="w-full flex flex-row mt-5">
-                <div className="w-2/3 border rounded-lg p-1 pb-4 border-gray-200 mr-2">
-                  <ChartContainer questionId={market?.id ?? "0"} />
-                </div>
-                <div className="w-1/3 rounded-lg border border-gray-200 ml-2">
-                  <div className="flex flex-col items-start p-6">
-                    <span className="text-lg font-bold m-auto pb-2">Buy</span>
-                    <hr className="text-black w-full py-2" />
-                    <span className="text-base">Pick Outcome</span>
-                    <div
-                      className={`w-full py-2 px-2 ${
-                        selected == "YES"
-                          ? "bg-green-500 text-blue-50"
-                          : "bg-gray-100"
-                      } mt-2 cursor-pointer`}
-                      onClick={() => setSelected("YES")}
-                    >
-                      <span className="font-bold">YES</span>{" "}
-                      {!market?.totalAmount
-                        ? `0`
-                        : (
-                            (market?.totalYes * 100) /
-                            market?.totalAmount
-                          ).toFixed(2)}
-                      %
-                    </div>
-                    <div
-                      className={`w-full py-2 px-2 ${
-                        selected == "NO"
-                          ? "bg-green-500 text-blue-50"
-                          : "bg-gray-100"
-                      } mt-2 cursor-pointer`}
-                      onClick={() => setSelected("NO")}
-                    >
-                      <span className="font-bold">No</span>{" "}
-                      {!market?.totalAmount
-                        ? `0`
-                        : (
-                            (market?.totalNo * 100) /
-                            market?.totalAmount
-                          ).toFixed(2)}
-                      %
-                    </div>
-                    <span className="text-sm mt-5 mb-4">How much?</span>
-                    <div className="w-full border border-gray-200 flex flex-row items-center">
-                      <input
-                        type="search"
-                        name="q"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        className="w-full py-2 px-2 text-base text-gray-700 border-gray-300 rounded-md focus:outline-none"
-                        placeholder="0"
-                        autoComplete="off"
+            <div className="w-full">
+              <div className="flex flex-col lg:flex-row gap-6">
+                <div className="w-full lg:w-cus-70 flex flex-col gap-6">
+                  <div className="flex flex-row gap-4 items-center">
+                    <div className="w-12 h-12 flex-shrink-0">
+                      <img
+                        // src={`https://ipfs.infura.io/ipfs/${market?.imageHash}`}
+                        src={"/images/us_election.webp"}
+                        className="rounded-full w-full h-full object-cover"
                       />
-                      <span className="whitespace-nowrap text-sm font-semibold">
-                        {common_file.token_name.value} |{" "}
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <span className="text-lg font-semibold">
+                        {market?.title}
                       </span>
-                      <span className="text-sm font-semibold text-blue-700 mx-2 underline cursor-pointer">
-                        Max
+                      <span className="text-sm font-normal text-gray-500">
+                        {market?.description}
                       </span>
                     </div>
-                    <button
-                      className={`mt-5 rounded-lg py-3 text-center w-full ${
-                        resolved || market?.hasResolved
-                          ? "bg-blue-200"
-                          : "bg-blue-700"
-                      } text-blue-50`}
-                      onClick={handleTrade}
-                      disabled={
-                        resolved === true ||
-                        button !== "Trade" ||
-                        market?.hasResolved === true
-                      }
-                    >
-                      {button}
-                    </button>
+                  </div>
+
+                  <div className="flex flex-row gap-6">
+                    <div className="flex flex-col gap-1.5">
+                      <span className="text-sm font-normal text-gray-500 whitespace-nowrap">
+                        Market End on
+                      </span>
+                      <span className="text-base font-semibold text-black whitespace-nowrap">
+                        {market?.endTimestamp
+                          ? moment(
+                              parseInt((market?.endTimestamp).toFixed(0))
+                            ).format("MMMM D, YYYY")
+                          : "N/A"}
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-1.5">
+                      <span className="text-sm font-normal text-gray-500 whitespace-nowrap">
+                        Total Volume
+                      </span>
+                      <span className="text-base font-semibold text-black whitespace-nowrap">
+                        {Web3.utils.fromWei(
+                          market?.totalAmount.toString() ?? "0",
+                          "ether"
+                        ) ?? 0}{" "}
+                        {common_file.token_name.value}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="border rounded-lg border-gray-200 py-6">
+                    <ChartContainer questionId={market?.id ?? "0"} />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <span className="text-base font-semibold">
+                      Description
+                    </span>
+                    <span>{market?.description}</span>
+                    <span className="text-base my-6 p-2 bg-gray-100 rounded-xl">
+                      Resolution Source :{" "}
+                      <a
+                        className="text-blue-700"
+                        target="_self"
+                        href={market?.resolverUrl}
+                      >
+                        {market?.resolverUrl}
+                      </a>
+                    </span>
+                  </div>
+                </div>
+                <div className="w-full lg:w-cus-30">
+                  <div className="rounded-lg border border-gray-200">
+                    <div className="flex flex-col items-start p-6">
+                      <span className="text-lg font-bold m-auto pb-2">Buy</span>
+                      <hr className="text-black w-full py-2" />
+                      <span className="text-base">Pick Outcome</span>
+                      <div
+                        className={`w-full py-2 px-2 rounded-lg ${
+                          selected == "YES"
+                            ? "bg-green-500 text-blue-50"
+                            : "bg-gray-100"
+                        } mt-2 cursor-pointer`}
+                        onClick={() => setSelected("YES")}
+                      >
+                        <span className="font-bold">YES</span>{" "}
+                        {!market?.totalAmount
+                          ? `0`
+                          : (
+                              (market?.totalYes * 100) /
+                              market?.totalAmount
+                            ).toFixed(2)}
+                        %
+                      </div>
+                      <div
+                        className={`w-full py-2 px-2 rounded-lg ${
+                          selected == "NO"
+                            ? "bg-rose-500 text-white"
+                            : "bg-gray-100 text-black"
+                        } mt-2 cursor-pointer`}
+                        onClick={() => setSelected("NO")}
+                      >
+                        <span className="font-bold">No</span>{" "}
+                        {!market?.totalAmount
+                          ? `0`
+                          : (
+                              (market?.totalNo * 100) /
+                              market?.totalAmount
+                            ).toFixed(2)}
+                        %
+                      </div>
+                      <span className="text-sm mt-5 mb-4">How much?</span>
+                      <div className="w-full border border-gray-200 rounded-lg flex flex-row items-center">
+                        <input
+                          type="search"
+                          name="q"
+                          value={input}
+                          onChange={(e) => setInput(e.target.value)}
+                          className="w-full py-2 px-2 text-base text-gray-700 bg-transparent focus:outline-none"
+                          placeholder="0"
+                          autoComplete="off"
+                        />
+                        <span className="whitespace-nowrap text-sm font-semibold">
+                          {common_file.token_name.value} |{" "}
+                        </span>
+                        <span className="text-sm font-semibold text-blue-700 mx-2 underline cursor-pointer">
+                          Max
+                        </span>
+                      </div>
+                      <button
+                        className={`mt-5 rounded-lg py-3 text-center w-full ${
+                          resolved || market?.hasResolved
+                            ? "bg-blue-200"
+                            : "bg-blue-700"
+                        } text-blue-50`}
+                        onClick={handleTrade}
+                        disabled={
+                          resolved === true ||
+                          button !== "Trade" ||
+                          market?.hasResolved === true
+                        }
+                      >
+                        {button}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="w-2/3 flex flex-col">
-                <span className="text-base font-semibold py-3">
-                  Description
-                </span>
-                <span>{market?.description}</span>
-                <span className="text-base my-3 py-2 bg-gray-100 rounded-xl px-3">
-                  Resolution Source :{" "}
-                  <a
-                    className="text-blue-700"
-                    target="_self"
-                    href={market?.resolverUrl}
-                  >
-                    {market?.resolverUrl}
-                  </a>
-                </span>
-              </div>
-            </div>
+
+
+
           </div>
         )}
       </main>

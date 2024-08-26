@@ -5,62 +5,85 @@ export const common_file = Object.freeze({
 });
 
 export const MarketLoader = () => (
-  <div className="w-full overflow-hidden sm:my-1 sm:px-1 sm:w-1/3 md:my-2 md:px-2 md:w-1/3 lg:w-1/3 xl:w-1/3 my-2">
-    <ContentLoader
-      viewBox="0 0 400 300"
-      backgroundColor="#e5e5e5"
-      foregroundColor="#f3f3f3"
-    >
-      <rect x="5" y="42" rx="16" ry="16" width="380" height="200" />
-    </ContentLoader>
-  </div>
-);
-
-export const AdminCardSample = () => (
-  <div className="w-1/2 pr-2">
-    <div className="w-full overflow-hidden my-2">
-      <div className="flex flex-col border border-gray-200 rounded-lg hover:border-blue-400 cursor-pointer">
-        <ContentLoader
-          viewBox="0 0 500 165"
-          backgroundColor="#e5e5e5"
-          foregroundColor="#f3f3f3"
-        >
-          <rect x="60" y="20" rx="10" ry="10" width="380" height="30" />
-          <rect x="20" y="95" rx="5" ry="5" width="90" height="13" />
-          <rect x="190" y="95" rx="5" ry="5" width="70" height="13" />
-          <rect x="268" y="95" rx="10" ry="10" width="107" height="30" />
-          <rect x="380" y="95" rx="10" ry="10" width="102" height="30" />
-          <rect x="20" y="120" rx="5" ry="5" width="140" height="18" />
-        </ContentLoader>
-      </div>
-    </div>
-  </div>
-);
-
-export const AdminMarketCardLoader = () => (
-  <main className="w-full flex flex-row flex-wrap py-4 max-w-5xl pb-6">
-    <AdminCardSample />
-    <AdminCardSample />
-    <AdminCardSample />
-    <AdminCardSample />
-    <AdminCardSample />
-    <AdminCardSample />
-  </main>
-);
-
-export const MarketPositonCardLoader = () => (
   <ContentLoader
-    width={"100%"}
-    height={"100%"}
-    viewBox="0 0 1500 1100"
+    viewBox="0 0 100% 150"
+    width="100%"
+    height="120"
     backgroundColor="#e5e5e5"
     foregroundColor="#f3f3f3"
   >
-    <rect x="5" y="8" rx="16" ry="16" width="1500" height="215" />
-    <rect x="5" y="245" rx="10" ry="10" width="270" height="35" />
-    <rect x="5" y="310" rx="16" ry="16" width="1500" height="245" />
-    <rect x="5" y="580" rx="16" ry="16" width="1500" height="245" />
-    <rect x="5" y="850" rx="16" ry="16" width="1500" height="245" />
+    <circle cx="30" cy="30" r="30" />
+    <rect x="80" y="25" rx="4" ry="4" width="80%" height="8" />
+    <rect x="0" y="80" rx="4" ry="4" width="40" height="8" />
+    <rect x="0" y="100" rx="4" ry="4" width="70" height="8" />
+    <rect x="50%" y="80" rx="4" ry="4" width="40" height="8" />
+    <rect x="50%" y="100" rx="4" ry="4" width="70" height="8" />
+    <rect x="90%" y="80" rx="4" ry="4" width="40" height="8" />
+    <rect x="85%" y="100" rx="4" ry="4" width="70" height="8" />
+  </ContentLoader>
+);
+
+export const AdminCardSample = () => (
+  <ContentLoader
+    viewBox="0 0 100% 150"
+    width="100%"
+    height="170"
+    backgroundColor="#e5e5e5"
+    foregroundColor="#f3f3f3"
+  >
+    <circle cx="30" cy="30" r="30" />
+    <rect x="80" y="25" rx="4" ry="4" width="80%" height="8" />
+    <rect x="0" y="80" rx="4" ry="4" width="40" height="8" />
+    <rect x="0" y="100" rx="4" ry="4" width="70" height="8" />
+    <rect x="0" y="120" rx="4" ry="4" width="70" height="8" />
+
+    <rect x="90%" y="80" rx="4" ry="4" width="40" height="8" />
+    <rect x="85%" y="100" rx="4" ry="4" width="70" height="8" />
+    <rect x="calc(100% - 80px)" y="140" rx="4" ry="4" width="80" height="30" />
+    <rect x="calc(100% - 180px)" y="140" rx="4" ry="4" width="80" height="30" />
+  </ContentLoader>
+);
+
+export const AdminMarketCardLoader = () => <AdminCardSample />;
+
+export const MarketPositonCardLoader = () => (
+  <ContentLoader
+    viewBox="0 0 100% 150"
+    width="100%"
+    height="220"
+    backgroundColor="#e5e5e5"
+    foregroundColor="#f3f3f3"
+  >
+    <circle cx="30" cy="30" r="30" />
+    <rect x="80" y="25" rx="4" ry="4" width="80%" height="8" />
+    <rect x="0" y="80" rx="4" ry="4" width="50" height="8" />
+    <rect x="0" y="100" rx="4" ry="4" width="100" height="8" />
+    <rect x="90%" y="80" rx="4" ry="4" width="50" height="8" />
+    <rect x="85%" y="100" rx="4" ry="4" width="100" height="8" />
+    <rect x="0" y="140" rx="4" ry="4" width="50" height="8" />
+    <rect x="0" y="160" rx="4" ry="4" width="100" height="8" />
+    <rect x="90%" y="140" rx="4" ry="4" width="50" height="8" />
+    <rect x="85%" y="160" rx="4" ry="4" width="100" height="8" />
+    <rect
+      x="calc(100% - 125px)"
+      y="180"
+      rx="8"
+      ry="8"
+      width="125"
+      height="30"
+    />
+  </ContentLoader>
+);
+
+export const BoxLoader = () => (
+  <ContentLoader viewBox="0 0 100% 150" width="100%" height="150">
+    <rect x="0" y="0" rx="12" ry="12" width="100%" height="150" />
+  </ContentLoader>
+);
+
+export const TitleLoader = () => (
+  <ContentLoader viewBox="0 0 200 20" width="200" height="20">
+    <rect x="0" y="0" rx="8" ry="8" width="200" height="20" />
   </ContentLoader>
 );
 
@@ -171,3 +194,23 @@ export const calculateTimeLeft = (input: number, cInput: number) => {
 
   return timeLeft;
 };
+
+export const ImageArr = [
+  { image: "us_election.webp" },
+  { image: "russia_war.jpeg" },
+  { image: "paralympics.webp" },
+  { image: "bitcoin.jpg" },
+  { image: "jones.webp" },
+  { image: "bitcoin.jpg" },
+  { image: "bitcoin.jpg" },
+  { image: "test-cric.jpeg" },
+  { image: "bitcoin.jpg" },
+  { image: "bitcoin.jpg" },
+  { image: "test-cric.jpeg" },
+  { image: "bitcoin.jpg" },
+  { image: "test-cric.jpeg" },
+  { image: "us_election.webp" },
+  { image: "bitcoin.jpg" },
+  { image: "test-cric.jpeg" },
+  { image: "us_election.webp" }
+];

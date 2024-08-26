@@ -1,0 +1,27 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  &::-webkit-scrollbar {
+    scrollbar-width: none;
+    display: none;
+    height: 0px;
+    width: 0px;
+  }
+}
+
+body {
+  font-family: $font-family;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+button {
+  &:focus-visible {
+    outline: none !important;
+  }
+}

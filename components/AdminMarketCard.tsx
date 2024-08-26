@@ -32,22 +32,24 @@ export const AdminMarketCard: React.FC<Props> = ({
   const checkDays = parseInt(daysLeft) <= 0;
 
   return (
-    <div className="w-full overflow-hidden my-2">
-      <div className="flex flex-col border border-gray-200 rounded-lg p-5 hover:border-blue-400 cursor-pointer">
-        <div className="flex flex-row space-x-5 pb-4">
-          <div className="h-w-15">
-            <Img
-              src={`https://ipfs.infura.io/ipfs/${imageHash}`}
-              className="rounded-full"
+
+    <div className="w-full overflow-hidden">
+      <div className="flex flex-col border border-gray-200 rounded-lg p-5 hover:border-gray-600 cursor-pointer">
+        <div className="flex flex-row gap-4 pb-4">
+          <div className="w-12 h-12 flex-shrink-0">
+            <img
+              // src={`https://ipfs.infura.io/ipfs/${imageHash}`}
+              src={"/images/us_election.webp"}
+              className="rounded-full w-full h-full object-cover"
               width={55}
               height={55}
             />
           </div>
-          <span className="text-lg font-semibold">{title}</span>
+          <p className="text-lg font-normal m-0 flex-grow">{title}</p>
         </div>
-        <div className="flex flex-row flex-nowrap justify-between items-center">
-          <div className="flex flex-col space-y-1">
-            <span className="text-xs text-gray-500 font-light pr-4">
+        <div className="flex flex-row flex-nowrap justify-between items-start pb-4">
+          <div className="flex flex-col gap-1">
+            <span className="text-xs text-gray-500 font-normal pr-4">
               Total Liquidity
             </span>
             <span className="text-base text-sm text-gray-700">
@@ -57,11 +59,9 @@ export const AdminMarketCard: React.FC<Props> = ({
               </p>
             </span>
           </div>
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col gap-1">
             <span
-              className={`text-xs ${
-                hasResolved ? "pr-4" : ""
-              } text-gray-500 font-light`}
+              className={`text-xs text-right text-gray-500 font-normal`}
             >
               {hasResolved
                 ? "Resolved"
@@ -69,28 +69,28 @@ export const AdminMarketCard: React.FC<Props> = ({
                 ? `${daysLeft} days`
                 : "Ended"}
             </span>
-            <span className="text-gray-600 text-sm">{`${daysLeft} Days`}</span>
+            <span className="text-gray-600 text-right text-sm">{`${daysLeft} Days`}</span>
           </div>
-          <div className="flex flex-row space-x-2 items-end">
-            <button
-              disabled={hasResolved === true || checkDays === true}
-              className={`py-1 px-2 rounded-lg ${
-                hasResolved || checkDays ? "bg-blue-200" : "bg-blue-500"
-              } text-blue-50`}
-              onClick={onYes}
-            >
-              Resolve YES
-            </button>
-            <button
-              disabled={hasResolved === true || checkDays === true}
-              className={`py-1 px-2 rounded-lg ${
-                hasResolved || checkDays ? "bg-blue-200" : "bg-blue-500"
-              } text-blue-50`}
-              onClick={onNo}
-            >
-              Resolve NO
-            </button>
-          </div>
+        </div>
+        <div className="flex flex-row gap-4 items-end justify-end">
+          <button
+            disabled={hasResolved === true}
+            className={`py-1 px-2 rounded-lg ${
+              hasResolved ? "bg-green-200" : "bg-green-500"
+            } text-green-50`}
+            onClick={onYes}
+          >
+            Resolve YES
+          </button>
+          <button
+            disabled={hasResolved === true}
+            className={`py-1 px-2 rounded-lg ${
+              hasResolved ? "bg-rose-200" : "bg-rose-500"
+            } text-rose-50`}
+            onClick={onNo}
+          >
+            Resolve NO
+          </button>
         </div>
       </div>
     </div>
