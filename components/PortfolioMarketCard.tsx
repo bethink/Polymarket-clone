@@ -37,55 +37,60 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
   const daysCheck = parseInt(daysLeft) > 0 ? true : false;
   console.log("🚀 ~ daysCheck:", daysCheck);
   return (
-    <div className="w-full overflow-hidden my-2">
-      <div className="flex flex-col border border-gray-200 rounded-lg p-5 hover:border-blue-400 cursor-pointer">
-        <div className="flex flex-row space-x-5 pb-4">
-          <div className="h-w-15">
-            <Img
-              src={`https://ipfs.infura.io/ipfs/${imageHash}`}
+    <div className="w-full overflow-hidden">
+      <div className="flex flex-col border border-gray-200 rounded-lg p-5 hover:border-gray-600 cursor-pointer">
+        <div className="flex flex-row items-center pb-8 gap-4">
+          <div className="w-12 h-12 flex-shrink-0">
+            <img
+              // src={`https://ipfs.infura.io/ipfs/${imageHash}`}
+              src={"https://cdn.guardianlink.io/product-hotspot/images/crypto_callit"}
               className="rounded-full"
               width={55}
               height={55}
             />
           </div>
-          <span className="text-lg font-semibold">{title}</span>
+          <p className="text-base font-normal m-0 flex-grow">{title}</p>
         </div>
-        <div className="flex flex-row flex-nowrap justify-between items-center">
-          <div className="flex flex-col space-y-1">
-            <span className="text-sm text-gray-500 font-light">Outcome</span>
-            <span className="text-base">{userYes ? "YES" : "NO"}</span>
-          </div>
-          <div className="flex flex-col space-y-1">
-            <span className="text-xs text-gray-500 font-light">
-              Amount Added
-            </span>
-            <span className="text-base">
-              {Web3.utils.fromWei(userYes ?? userNo)}{" "}
-              {common_file.token_name.value}
-            </span>
-          </div>
-          <div className="flex flex-col space-y-1">
-            <span className="text-xs text-gray-500 font-light">Added On</span>
-            <span className="text-base">
-              {timestamp
-                ? moment(parseInt(timestamp) * 1000).format(
-                    "MMMM D, YYYY HH:mm a"
-                  )
-                : "N/A"}
-            </span>
-          </div>
-          <div className="flex flex-col space-y-1">
-            <span className="text-xs text-gray-500 font-light">
-              {daysCheck ? "Ending In" : "Ended"}
-            </span>
-            <span className={`text-base ${daysCheck ? "" : "pl-4"}`}>
-              {parseInt(daysLeft) > 0 ? `${daysLeft} days` : "_"}
-            </span>
-          </div>
-          <div className="flex flex-col space-y-1 items-end">
-            <div className="py-2 px-8 rounded-lg bg-blue-500 text-blue-50">
-              Trade
+        <div className="flex flex-col gap-3">
+          <div className="flex justify-between">
+            <div className="flex flex-col gap-1">
+              <span className="text-sm text-gray-500 font-light">Outcome</span>
+              <span className="text-base">{userYes ? "YES" : "NO"}</span>
             </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-xs text-gray-500 font-light text-right">
+                Amount Added
+              </span>
+              <span className="text-base text-right">
+                {Web3.utils.fromWei(userYes ?? userNo)}{" "}
+                {common_file.token_name.value}
+              </span>
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <div className="flex flex-col gap-1">
+              <span className="text-xs text-gray-500 font-light">Added On</span>
+              <span className="text-base">
+                {timestamp
+                  ? moment(parseInt(timestamp) * 1000).format(
+                      "MMMM D, YYYY HH:mm a"
+                    )
+                  : "N/A"}
+              </span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-xs text-gray-500 font-light text-right">
+                {daysCheck ? "Ending In" : "Ended"}
+              </span>
+              <span className={`text-base text-right`}>
+                {parseInt(daysLeft) > 0 ? `${daysLeft} days` : "_"}
+              </span>
+            </div>
+          </div>
+          <div className="flex justify-end">
+            <button className="px-4 py-1.5 bg-blue-500 text-white w-fit text-sm font-medium rounded-md">
+              Trade
+            </button>
           </div>
         </div>
       </div>

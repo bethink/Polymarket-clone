@@ -4,12 +4,45 @@ module.exports = {
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    screens: {
+      'sm': '576px',
+      // => @media (min-width: 576px) { ... }
+
+      'md': '767px',
+      // => @media (min-width: 767px) { ... }
+
+      'lg': '992px',
+      // => @media (min-width: 992px) { ... }
+
+      'xl': '1200px',
+      // => @media (min-width: 1200px) { ... }
+
+      'xxl': '1400px',
+      // => @media (min-width: 1400px) { ... }
+    },
     extend: {
       fontFamily: {
         albert: ['"Albert Sans"', "sans-serif"]
-      }
+      },
+      width: {
+        'cus-70': '70%',
+        'cus-30': '30%',
+      },
     },
     colors: {
+      transparent: 'transparent',
+      white: '#ffffff',
+      cusBlack: {
+        100: "rgba(0,0,0,0.1)",
+        200: "rgba(0,0,0,0.2)",
+        300: "rgba(0,0,0,0.3)",
+        400: "rgba(0,0,0,0.4)",
+        500: "rgba(0,0,0,0.5)",
+        600: "rgba(0,0,0,0.6)",
+        700: "rgba(0,0,0,0.7)",
+        800: "rgba(0,0,0,0.8)",
+        900: "rgba(0,0,0,0.9)"
+      },
       blue: {
         50: "#e6f1fe",
         100: "#cce3fd",
@@ -47,7 +80,7 @@ module.exports = {
         900: "#053B48"
       },
       green: {
-        50: "#e8fafo",
+        50: "#E8FAF0",
         100: "#d1f4e0",
         200: "#a2e9c1",
         300: "#74dfa2",
@@ -82,7 +115,8 @@ module.exports = {
         800: "#610726",
         900: "#310413"
       }
-    }
+    },
+
   },
   variants: {
     extend: {}

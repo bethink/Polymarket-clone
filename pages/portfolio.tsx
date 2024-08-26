@@ -6,12 +6,14 @@ import { PortfolioMarketCard } from "../components/PortfolioMarketCard";
 import { useData } from "../contexts/DataContext";
 import styles from "../styles/Home.module.css";
 import {
+  BoxLoader,
   common_file,
   MarketDetailLoader,
   MarketLoader,
   MarketPositonCardLoader,
   MarketPositonCardLoaderStat,
-  PortfolioPageLoader
+  PortfolioPageLoader,
+  TitleLoader
 } from "../constant/constant";
 import { MarketCard } from "../components/MarketCard";
 
@@ -47,6 +49,7 @@ const Portfolio = () => {
   const [allQuestions, setAllQuestions] = useState<QuestionsProps[]>([]);
   const [openPositions, setOpenPositions] = useState<number>(0);
   const [dataLoading, setDataLoading] = useState<Boolean>(true);
+  const loaders = Array(9).fill(0);
 
   const getMarkets = useCallback(async () => {
     var totalQuestions = await polymarket.methods
@@ -127,12 +130,20 @@ const Portfolio = () => {
       </Head>
       <Navbar />
       {dataLoading ? (
-        <main className="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow max-w-5xl">
-          <MarketPositonCardLoader />
+        <main className="w-full flex flex-col gap-6 max-w-full px-4 sm:px-6 lg:px-8 pt-6">
+          <BoxLoader />
+          <TitleLoader />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {loaders.map((_, index) => (
+              <div className="flex flex-col border border-gray-200 rounded-lg p-5" key={index}>
+                <MarketPositonCardLoader />
+              </div>
+            ))}
+          </div>
         </main>
       ) : (
-        <main className="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow max-w-5xl">
-          <div className="w-full flex flex-col pt-1">
+        <main className="w-full flex flex-col max-w-full px-4 sm:px-6 lg:px-8">
+          <div className="w-full flex flex-col pt-6 gap-4">
             <div className="p-10 bg-blue-500 rounded-lg flex flex-row justify-evenly">
               <div className="flex flex-col items-center">
                 <h1 className="text-blue-50 opacity-50 text-lg">
@@ -144,25 +155,29 @@ const Portfolio = () => {
                 </h1>
               </div>
             </div>
-            <span className="font-bold my-3 text-lg">
-              Your Market Positions
-            </span>
-            {markets.map((market) => (
-              <PortfolioMarketCard
-                id={market.id}
-                title={market.title!}
-                imageHash={market.imageHash!}
-                totalAmount={market.totalAmount!}
-                totalYes={market.totalYes!}
-                totalNo={market.totalNo!}
-                userYes={market.userYes!}
-                userNo={market.userNo!}
-                key={market.id!}
-                hasResolved={market.hasResolved!}
-                timestamp={market.timestamp!}
-                endTimestamp={market.endTimestamp!}
-              />
-            ))}
+
+            <div className="section-title">
+              <h6 className="font-bold text-lg text-black"> Your Market Positions</h6>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {markets.map((market) => (
+                <PortfolioMarketCard
+                  id={market.id}
+                  title={market.title!}
+                  imageHash={market.imageHash!}
+                  totalAmount={market.totalAmount!}
+                  totalYes={market.totalYes!}
+                  totalNo={market.totalNo!}
+                  userYes={market.userYes!}
+                  userNo={market.userNo!}
+                  key={market.id!}
+                  hasResolved={market.hasResolved!}
+                  timestamp={market.timestamp!}
+                  endTimestamp={market.endTimestamp!}
+                />
+              ))}
+            </div>
           </div>
         </main>
       )}
