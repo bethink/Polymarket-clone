@@ -9,14 +9,15 @@ import Navbar from "../../components/Navbar";
 import { useData } from "../../contexts/DataContext";
 import {
   common_file,
+  ImageArr,
   MarketDetailLoader,
   MarketDetailLoader1,
-  MarketDetailLoader2,
+  MarketDetailLoader2
 } from "../../constant/constant";
 import ChartContainer from "../../components/Chart/ChartContainer";
 
 export interface MarketProps {
-  id: string;
+  id: any;
   title: string;
   imageHash: string;
   totalAmount: number;
@@ -30,7 +31,8 @@ export interface MarketProps {
 
 const Details = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const id: any = router.query.id;
+  let imageName = ImageArr[id - 1]?.image;
   const { polymarket, account, loadWeb3, loading, polyToken } = useData();
   const [market, setMarket] = useState<MarketProps>();
   const [resolved, setResolved] = useState<Boolean>();
@@ -47,7 +49,6 @@ const Details = () => {
 
   const getMarketData = useCallback(async () => {
     var data = await polymarket.methods.questions(id).call({ from: account });
-    console.log("🚀 ~ getMarketData ~ data:", data);
     setMarket({
       id: data.id,
       title: data.question,
@@ -131,155 +132,150 @@ const Details = () => {
             </div>
           </div>
         ) : (
-            <div className="w-full">
-              <div className="flex flex-col lg:flex-row gap-6">
-                <div className="w-full lg:w-cus-70 flex flex-col gap-6">
-                  <div className="flex flex-row gap-4 items-center">
-                    <div className="w-12 h-12 flex-shrink-0">
-                      <img
-                        // src={`https://ipfs.infura.io/ipfs/${market?.imageHash}`}
-                        src={"/images/us_election.webp"}
-                        className="rounded-full w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="flex flex-col flex-grow">
-                      <span className="text-lg font-semibold">
-                        {market?.title}
-                      </span>
-                      <span className="text-sm font-normal text-gray-500">
-                        {market?.description}
-                      </span>
-                    </div>
+          <div className="w-full">
+            <div className="flex flex-col lg:flex-row gap-6">
+              <div className="w-full lg:w-cus-70 flex flex-col gap-6">
+                <div className="flex flex-row gap-4 items-center">
+                  <div className="w-12 h-12 flex-shrink-0">
+                    <img
+                      // src={`https://ipfs.infura.io/ipfs/${market?.imageHash}`}
+                      src={`/images/${imageName}`}
+                      className="rounded-full w-full h-full object-cover"
+                    />
                   </div>
-
-                  <div className="flex flex-row gap-6">
-                    <div className="flex flex-col gap-1.5">
-                      <span className="text-sm font-normal text-gray-500 whitespace-nowrap">
-                        Market End on
-                      </span>
-                      <span className="text-base font-semibold text-black whitespace-nowrap">
-                        {market?.endTimestamp
-                          ? moment(
-                              parseInt((market?.endTimestamp).toFixed(0))
-                            ).format("MMMM D, YYYY")
-                          : "N/A"}
-                      </span>
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                      <span className="text-sm font-normal text-gray-500 whitespace-nowrap">
-                        Total Volume
-                      </span>
-                      <span className="text-base font-semibold text-black whitespace-nowrap">
-                        {Web3.utils.fromWei(
-                          market?.totalAmount.toString() ?? "0",
-                          "ether"
-                        ) ?? 0}{" "}
-                        {common_file.token_name.value}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="border rounded-lg border-gray-200 py-6">
-                    <ChartContainer questionId={market?.id ?? "0"} />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <span className="text-base font-semibold">
-                      Description
+                  <div className="flex flex-col flex-grow">
+                    <span className="text-lg font-semibold">
+                      {market?.title}
                     </span>
-                    <span>{market?.description}</span>
-                    <span className="text-base my-6 p-2 bg-gray-100 rounded-xl">
-                      Resolution Source :{" "}
-                      <a
-                        className="text-blue-700"
-                        target="_self"
-                        href={market?.resolverUrl}
-                      >
-                        {market?.resolverUrl}
-                      </a>
+                    <span className="text-sm font-normal text-gray-500">
+                      {market?.description}
                     </span>
                   </div>
                 </div>
-                <div className="w-full lg:w-cus-30">
-                  <div className="rounded-lg border border-gray-200">
-                    <div className="flex flex-col items-start p-6">
-                      <span className="text-lg font-bold m-auto pb-2">Buy</span>
-                      <hr className="text-black w-full py-2" />
-                      <span className="text-base">Pick Outcome</span>
-                      <div
-                        className={`w-full py-2 px-2 rounded-lg ${
-                          selected == "YES"
-                            ? "bg-green-500 text-blue-50"
-                            : "bg-gray-100"
-                        } mt-2 cursor-pointer`}
-                        onClick={() => setSelected("YES")}
-                      >
-                        <span className="font-bold">YES</span>{" "}
-                        {!market?.totalAmount
-                          ? `0`
-                          : (
-                              (market?.totalYes * 100) /
-                              market?.totalAmount
-                            ).toFixed(2)}
-                        %
-                      </div>
-                      <div
-                        className={`w-full py-2 px-2 rounded-lg ${
-                          selected == "NO"
-                            ? "bg-rose-500 text-white"
-                            : "bg-gray-100 text-black"
-                        } mt-2 cursor-pointer`}
-                        onClick={() => setSelected("NO")}
-                      >
-                        <span className="font-bold">No</span>{" "}
-                        {!market?.totalAmount
-                          ? `0`
-                          : (
-                              (market?.totalNo * 100) /
-                              market?.totalAmount
-                            ).toFixed(2)}
-                        %
-                      </div>
-                      <span className="text-sm mt-5 mb-4">How much?</span>
-                      <div className="w-full border border-gray-200 rounded-lg flex flex-row items-center">
-                        <input
-                          type="search"
-                          name="q"
-                          value={input}
-                          onChange={(e) => setInput(e.target.value)}
-                          className="w-full py-2 px-2 text-base text-gray-700 bg-transparent focus:outline-none"
-                          placeholder="0"
-                          autoComplete="off"
-                        />
-                        <span className="whitespace-nowrap text-sm font-semibold">
-                          {common_file.token_name.value} |{" "}
-                        </span>
-                        <span className="text-sm font-semibold text-blue-700 mx-2 underline cursor-pointer">
-                          Max
-                        </span>
-                      </div>
-                      <button
-                        className={`mt-5 rounded-lg py-3 text-center w-full ${
-                          resolved || market?.hasResolved
-                            ? "bg-blue-200"
-                            : "bg-blue-700"
-                        } text-blue-50`}
-                        onClick={handleTrade}
-                        disabled={
-                          resolved === true ||
-                          button !== "Trade" ||
-                          market?.hasResolved === true
-                        }
-                      >
-                        {button}
-                      </button>
+
+                <div className="flex flex-row gap-6">
+                  <div className="flex flex-col gap-1.5">
+                    <span className="text-sm font-normal text-gray-500 whitespace-nowrap">
+                      Market End on
+                    </span>
+                    <span className="text-base font-semibold text-black whitespace-nowrap">
+                      {market?.endTimestamp
+                        ? moment(
+                            parseInt((market?.endTimestamp).toFixed(0))
+                          ).format("MMMM D, YYYY")
+                        : "N/A"}
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <span className="text-sm font-normal text-gray-500 whitespace-nowrap">
+                      Total Volume
+                    </span>
+                    <span className="text-base font-semibold text-black whitespace-nowrap">
+                      {Web3.utils.fromWei(
+                        market?.totalAmount.toString() ?? "0",
+                        "ether"
+                      ) ?? 0}{" "}
+                      {common_file.token_name.value}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="border rounded-lg border-gray-200 py-6">
+                  <ChartContainer questionId={market?.id ?? "0"} />
+                </div>
+
+                <div className="flex flex-col">
+                  <span className="text-base font-semibold">Description</span>
+                  <span>{market?.description}</span>
+                  <span className="text-base my-6 p-2 bg-gray-100 rounded-xl">
+                    Resolution Source :{" "}
+                    <a
+                      className="text-blue-700"
+                      target="_self"
+                      href={market?.resolverUrl}
+                    >
+                      {market?.resolverUrl}
+                    </a>
+                  </span>
+                </div>
+              </div>
+              <div className="w-full lg:w-cus-30">
+                <div className="rounded-lg border border-gray-200">
+                  <div className="flex flex-col items-start p-6">
+                    <span className="text-lg font-bold m-auto pb-2">Buy</span>
+                    <hr className="text-black w-full py-2" />
+                    <span className="text-base">Pick Outcome</span>
+                    <div
+                      className={`w-full py-2 px-2 rounded-lg ${
+                        selected == "YES"
+                          ? "bg-green-500 text-blue-50"
+                          : "bg-gray-100"
+                      } mt-2 cursor-pointer`}
+                      onClick={() => setSelected("YES")}
+                    >
+                      <span className="font-bold">YES</span>{" "}
+                      {!market?.totalAmount
+                        ? `0`
+                        : (
+                            (market?.totalYes * 100) /
+                            market?.totalAmount
+                          ).toFixed(2)}
+                      %
                     </div>
+                    <div
+                      className={`w-full py-2 px-2 rounded-lg ${
+                        selected == "NO"
+                          ? "bg-rose-500 text-white"
+                          : "bg-gray-100 text-black"
+                      } mt-2 cursor-pointer`}
+                      onClick={() => setSelected("NO")}
+                    >
+                      <span className="font-bold">No</span>{" "}
+                      {!market?.totalAmount
+                        ? `0`
+                        : (
+                            (market?.totalNo * 100) /
+                            market?.totalAmount
+                          ).toFixed(2)}
+                      %
+                    </div>
+                    <span className="text-sm mt-5 mb-4">How much?</span>
+                    <div className="w-full border border-gray-200 rounded-lg flex flex-row items-center">
+                      <input
+                        type="search"
+                        name="q"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        className="w-full py-2 px-2 text-base text-gray-700 bg-transparent focus:outline-none"
+                        placeholder="0"
+                        autoComplete="off"
+                      />
+                      <span className="whitespace-nowrap text-sm font-semibold">
+                        {common_file.token_name.value} |{" "}
+                      </span>
+                      <span className="text-sm font-semibold text-blue-700 mx-2 underline cursor-pointer">
+                        Max
+                      </span>
+                    </div>
+                    <button
+                      className={`mt-5 rounded-lg py-3 text-center w-full ${
+                        resolved || market?.hasResolved
+                          ? "bg-blue-200"
+                          : "bg-blue-700"
+                      } text-blue-50`}
+                      onClick={handleTrade}
+                      disabled={
+                        resolved === true ||
+                        button !== "Trade" ||
+                        market?.hasResolved === true
+                      }
+                    >
+                      {button}
+                    </button>
                   </div>
                 </div>
               </div>
-
-
-
+            </div>
           </div>
         )}
       </main>
