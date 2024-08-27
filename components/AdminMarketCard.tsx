@@ -1,11 +1,11 @@
 import Img from "next/image";
 import React, { useEffect, useState } from "react";
 import Web3 from "web3";
-import { calculateTimeLeft, common_file } from "../constant/constant";
+import { calculateTimeLeft, common_file, ImageArr } from "../constant/constant";
 import moment from "moment";
 
 interface Props {
-  id: string;
+  id: any;
   title: string;
   imageHash: string;
   totalAmount: string;
@@ -16,6 +16,7 @@ interface Props {
 }
 
 export const AdminMarketCard: React.FC<Props> = ({
+  id,
   title,
   totalAmount,
   hasResolved,
@@ -24,6 +25,7 @@ export const AdminMarketCard: React.FC<Props> = ({
   onNo,
   imageHash
 }) => {
+  let imageName = ImageArr[id - 1]?.image;
   const timeStamp = endTimestamp;
   const time = new Date(timeStamp as string | number).getTime();
   var endingOn = moment(parseInt(endTimestamp));
@@ -32,14 +34,13 @@ export const AdminMarketCard: React.FC<Props> = ({
   const checkDays = parseInt(daysLeft) <= 0;
 
   return (
-
     <div className="w-full overflow-hidden">
       <div className="flex flex-col border border-gray-200 rounded-lg p-5 hover:border-gray-600 cursor-pointer">
         <div className="flex flex-row gap-4 pb-4">
           <div className="w-12 h-12 flex-shrink-0">
             <img
               // src={`https://ipfs.infura.io/ipfs/${imageHash}`}
-              src={"/images/us_election.webp"}
+              src={`/images/${imageName}`}
               className="rounded-full w-full h-full object-cover"
               width={55}
               height={55}
@@ -60,9 +61,7 @@ export const AdminMarketCard: React.FC<Props> = ({
             </span>
           </div>
           <div className="flex flex-col gap-1">
-            <span
-              className={`text-xs text-right text-gray-500 font-normal`}
-            >
+            <span className={`text-xs text-right text-gray-500 font-normal`}>
               {hasResolved
                 ? "Resolved"
                 : parseInt(daysLeft) > 0

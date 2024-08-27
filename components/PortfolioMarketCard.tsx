@@ -3,6 +3,7 @@ import Img from "next/image";
 import React from "react";
 import Web3 from "web3";
 import { common_file, ImageArr } from "../constant/constant";
+import { useRouter } from "next/router";
 
 export interface MarketProps {
   id: any;
@@ -31,12 +32,12 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
   timestamp,
   endTimestamp
 }) => {
+  const router = useRouter();
   let imageName = ImageArr[id - 1]?.image;
   var endingOn = moment(parseInt(endTimestamp));
   var now = moment(new Date()); //todays date
   var daysLeft = moment.duration(endingOn.diff(now)).asDays().toFixed(0);
   const daysCheck = parseInt(daysLeft) > 0 ? true : false;
-  console.log("🚀 ~ daysCheck:", daysCheck);
   return (
     <div className="w-full overflow-hidden">
       <div className="flex flex-col border border-gray-200 rounded-lg p-5 hover:border-gray-600 cursor-pointer">
@@ -89,7 +90,10 @@ export const PortfolioMarketCard: React.FC<MarketProps> = ({
             </div>
           </div>
           <div className="flex justify-end">
-            <button className="px-4 py-1.5 bg-blue-500 text-white w-fit text-sm font-medium rounded-md">
+            <button
+              onClick={() => router.push(`/market/${id}`)}
+              className="px-4 py-1.5 bg-blue-500 text-white w-fit text-sm font-medium rounded-md"
+            >
               Trade
             </button>
           </div>
