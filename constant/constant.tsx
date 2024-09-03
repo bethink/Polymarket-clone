@@ -207,10 +207,11 @@ export const ImageArr = [
   { image: "bitcoin.jpg" },
   { image: "bitcoin.jpg" },
   { image: "test-cric.jpeg" },
-  { image: "bitcoin.jpg" },
+  { image: "test-cric.jpeg" },
   { image: "test-cric.jpeg" },
   { image: "us_election.webp" },
   { image: "bitcoin.jpg" },
   { image: "test-cric.jpeg" },
-  { image: "us_election.webp" }
+  { image: "us_election.webp" },
+  { image: "test-cric.jpeg" }
 ];

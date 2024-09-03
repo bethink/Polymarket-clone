@@ -27,7 +27,7 @@ export const AdminMarketCard: React.FC<Props> = ({
 }) => {
   let imageName = ImageArr[id - 1]?.image;
   const timeStamp = endTimestamp;
-  const time = new Date(timeStamp as string | number).getTime();
+  // const time = new Date(timeStamp as string | number).getTime();
   var endingOn = moment(parseInt(endTimestamp));
   var now = moment(new Date()); //todays date
   var daysLeft = moment.duration(endingOn.diff(now)).asDays().toFixed(0);
@@ -62,13 +62,25 @@ export const AdminMarketCard: React.FC<Props> = ({
           </div>
           <div className="flex flex-col gap-1">
             <span className={`text-xs text-right text-gray-500 font-normal`}>
-              {hasResolved
-                ? "Resolved"
-                : parseInt(daysLeft) > 0
-                ? `${daysLeft} days`
-                : "Ended"}
+              Validity
             </span>
-            <span className="text-gray-600 text-right text-sm">{`${daysLeft} Days`}</span>
+            <span className="text-gray-600 text-right text-sm">
+              {parseInt(daysLeft) > 0 ? (
+                <>
+                  {hasResolved && (
+                    <span className="text-rose-400">Resolved </span> // Apply your desired color here
+                  )}
+                  {`${daysLeft} Days`}
+                </>
+              ) : (
+                <>
+                  {hasResolved && (
+                    <span className="text-rose-400">Resolved </span> // Apply your desired color here
+                  )}
+                  {`Expired`}
+                </>
+              )}
+            </span>
           </div>
         </div>
         <div className="flex flex-row gap-4 items-end justify-end">
